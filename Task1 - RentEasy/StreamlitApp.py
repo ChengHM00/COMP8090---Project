@@ -1,3 +1,6 @@
+
+# Main Streamlit application module for RentEasy, which provides a user interface to manage Room/Leisure objects, create rentals, view revenue, and handle data import/export.
+
 import streamlit as st
 from datetime import date
 from dataclasses import dataclass
@@ -30,7 +33,7 @@ class StreamlitApp:
         elif page == "Data Management":
             self.show_data_management()
 
-
+# Each of the following methods corresponds to a different page in the Streamlit app. This is the home page.
     def show_home():
         st.header("Welcome to RentEasy")
         st.write("Manage your homestay rooms and leisure facilities with object-oriented assets and rentals.")
@@ -47,12 +50,13 @@ class StreamlitApp:
         col2.metric("Leisure", len(asset_manager.leisures_assets))
         col3.metric("Total Rentals", stats['total_rentals'])
 
-
+#This is the Manage Assets page, which allows users to add, edit, and delete room and leisure assets.
     def show_manage_assets():
         asset_manager = CSVManager.get_manager()
         st.header("Manage Assets")
         tab1, tab2 = st.tabs(["Rooms", "Leisure Facilities"])
 
+        # Add room asset
         with tab1:
             st.subheader("Add New Room Asset")
             with st.form("add_room_asset"):
@@ -67,7 +71,7 @@ class StreamlitApp:
                     asset_manager.add_room_asset(room_name, location, capacity, start_date, end_date, maintenance)
                     st.success("Room asset added successfully!")
                     st.rerun()
-
+            # Show existing room assets with edit and delete options
             st.subheader("Existing Room Assets")
             for index, room in enumerate(asset_manager.rooms_assets):
                 with st.expander(room.room_name or f"Room {index+1}"):
@@ -92,7 +96,7 @@ class StreamlitApp:
                     if st.button("Delete Room", key=f"delete_room_{index}"):
                         asset_manager.delete_room_asset(index)
                         st.rerun()
-
+        # Add leisure asset
         with tab2:
             st.subheader("Add New Leisure Asset")
             with st.form("add_leisure_asset"):
@@ -107,7 +111,7 @@ class StreamlitApp:
                     asset_manager.add_leisure_asset(leisure_name, location, availability, start_date, end_date, maintenance)
                     st.success("Leisure asset added successfully!")
                     st.rerun()
-
+            # Show existing leisure assets with edit and delete options
             st.subheader("Existing Leisure Assets")
             for index, leisure in enumerate(asset_manager.leisures_assets):
                 with st.expander(leisure.leisure_name or f"Leisure {index+1}"):
@@ -133,13 +137,14 @@ class StreamlitApp:
                         asset_manager.delete_leisure_asset(index)
                         st.rerun()
 
-
+#This is the Manage Rentals page, which allows users to add, edit, and delete room and leisure rentals.
     def show_manage_rentals():
         asset_manager = CSVManager.get_manager()
         rental_manager = CSVManager.get_rental_manager(asset_manager)
         st.header("Manage Rentals")
         tab1, tab2 = st.tabs(["Room Rentals", "Leisure Rentals"])
 
+        #Check if there is available rooms for rental, if not show warning message.
         with tab1:
             st.subheader("Add New Room Rental")
             if not asset_manager.rooms_assets:
@@ -165,7 +170,7 @@ class StreamlitApp:
                                 st.rerun()
                             except Exception as exc:
                                 st.error(str(exc))
-
+        # Check if there is available leisure for rental, if not show warning message.
         with tab2:
             st.subheader("Add New Leisure Rental")
             if not asset_manager.leisures_assets:
@@ -188,12 +193,13 @@ class StreamlitApp:
 
                         room_rental_options = []
                         room_rental_indices = []
+                        # Find room rentals that overlap with the leisure rental period for linking
                         for index, rental in enumerate(rental_manager.rentals):
                             if rental.asset_type == 'room' and start_date >= rental.start_date and end_date <= rental.end_date:
                                 room_name = asset_manager.rooms_assets[rental.asset_index].room_name
                                 room_rental_options.append(f"Rental {rental.rental_id}: {room_name} ({rental.start_date} to {rental.end_date})")
                                 room_rental_indices.append(index)
-
+                        # If there are valid room rentals to link, show a selectbox to choose one. Otherwise, show a warning that leisure rentals must be within an existing room rental period.
                         selected_room_rental_index = None
                         if room_rental_options:
                             options = ["Select a room rental"] + room_rental_options
@@ -204,6 +210,7 @@ class StreamlitApp:
                             st.warning("No room rentals found that cover the selected leisure dates. Leisure rentals must be within an existing room rental period.")
 
                         submitted = st.form_submit_button("Create Leisure Rental")
+                        # When creating a leisure rental, ensure that a room rental is selected for linking. If not, show an error message prompting the user to select a room rental.
                         if submitted:
                             try:
                                 if selected_room_rental_index is None:
@@ -214,7 +221,7 @@ class StreamlitApp:
                                 st.rerun()
                             except Exception as exc:
                                 st.error(str(exc))
-
+        # Show existing rentals with edit and delete options
         st.subheader("Rental History")
         for rental in rental_manager.rentals:
             asset_name = (asset_manager.rooms_assets[rental.asset_index].room_name
@@ -236,7 +243,7 @@ class StreamlitApp:
                     rental_manager.rentals.remove(rental)
                     st.rerun()
 
-
+    # This is the Revenue page, which allows users view the total revenue from all rentals.
     def show_revenue():
         asset_manager = CSVManager.get_manager()
         rental_manager = CSVManager.get_rental_manager(asset_manager)
@@ -257,7 +264,7 @@ class StreamlitApp:
         else:
             st.info("No rentals recorded yet.")
 
-
+    #This is data management page, which allows users to IO csv Room/Leisure/Rental data seperately.
     def show_data_management():
         asset_manager = CSVManager.get_manager()
         rental_manager = CSVManager.get_rental_manager(asset_manager)
@@ -314,7 +321,9 @@ class StreamlitApp:
             st.divider()
             if st.button("Export All Data (ZIP)", use_container_width=True):
                 st.info("ZIP export feature coming soon! Please export each data type separately for now.")
-
+        
+        # Import page and add the data to the lsit, then show the data in the page. 
+        # When importing, it will replace existing data, so show a warning message before importing.
         with tab2:
             st.subheader("Import Data from CSV")
             st.warning("**Important:** Importing will replace existing data. Make sure to export your current data first!")
@@ -355,7 +364,8 @@ class StreamlitApp:
             st.divider()
             st.subheader("Quick Actions")
             col1, col2 = st.columns(2)
-
+            
+            # Clear all data action, which will clear all room, leisure, and rental data. Show a confirmation message before clearing.
             with col1:
                 if st.button("Clear All Data", use_container_width=True, type="secondary"):
                     asset_manager.clear()
@@ -367,7 +377,6 @@ class StreamlitApp:
                 total_items = len(asset_manager.rooms_assets) + len(asset_manager.leisures_assets) + len(rental_manager.rentals)
                 st.metric("Total Data Items", total_items)
 
-
-
+# This is the StramlitApp class for Web App function. It should not be instantiated directly.
 if __name__ == "__main__":
    print("This is StramlitApp class for Web App function. It should not be instantiated directly.")

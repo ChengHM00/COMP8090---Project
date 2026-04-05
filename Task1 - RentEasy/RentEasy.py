@@ -1,3 +1,6 @@
+
+# Main module to run the RentEasy application
+
 import streamlit as st
 from datetime import date
 
@@ -9,8 +12,7 @@ from Manager.Manager import AssetManager, RentalManager
 from Manager.CSVManager import CSVManager
 from StreamlitApp import StreamlitApp   
 
-
-
+#Read the dict list and convert them to Room, Leisure objects and RentalRecord objects
 def _room_from_dict(record: dict) -> Room:
         return Room(
             location=record['location'],
@@ -58,7 +60,7 @@ def _rental_record_from_dict(record: dict, rental_id: int) -> RentalRecord:
         room_rental_index=room_rental_index,
     )
 
-
+#   Get the Asset and Rental Managers, and initialize them with the data from session state if available, otherwise create new instances
 def get_manager() -> AssetManager:
     if 'asset_manager' not in st.session_state:
         manager = AssetManager()
@@ -107,7 +109,7 @@ def get_rental_manager(asset_manager: AssetManager) -> RentalManager:
         st.session_state.rental_manager = rental_manager
     return st.session_state.rental_manager
 
-
+# Main function to run the Streamlit app, which initializes the managers and displays the appropriate page based on user selection
 def main():
     st.set_page_config(page_title="RentEasy", layout="wide")
     st.title("RentEasy - Homestay Management System")

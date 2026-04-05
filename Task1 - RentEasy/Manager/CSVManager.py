@@ -1,3 +1,6 @@
+
+# CSV Management Module for handling import and export of room, leisure, and rental data in CSV format, with validation and error handling.
+
 import streamlit as st
 from datetime import date
 import pandas as pd
@@ -8,7 +11,8 @@ class CSVManager:
     def __init__(self, asset_manager, rental_manager):
         self.asset_manager = asset_manager
         self.rental_manager = rental_manager
-
+    
+    #Export rooms, leisures, and rentals to CSV format
     def export_rooms_to_csv(self):
         if not self.asset_manager.rooms_assets:
             return None
@@ -66,6 +70,7 @@ class CSVManager:
         df = pd.DataFrame(data)
         return df.to_csv(index=False).encode('utf-8')
 
+    # Import rooms, leisures, and rentals from CSV format with validation and error handling
     def import_rooms_from_csv(self, csv_data):
         try:
             df = pd.read_csv(io.StringIO(csv_data.decode('utf-8')))
@@ -127,6 +132,7 @@ class CSVManager:
                     if room_rental_index_value != '':
                         room_rental_index = self._parse_int(room_rental_index_value, None)
 
+                # Convert the CSV row to a RentalRecord dictionary
                 converted = {
                     'type': row['type'],
                     'asset_index': self._parse_int(row['asset_index'], None),

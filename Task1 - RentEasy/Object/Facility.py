@@ -1,7 +1,9 @@
+
+# Module of Facility class to represent a rental facility with attributes for location, availability dates, maintenance status, and revenue.
+
 from datetime import date
 from abc import ABC, abstractmethod
 
-# Facility class to represent a rental facility with attributes for location, availability dates, maintenance status, and revenue.
 class Facility(ABC):
 
     def __init__(self,location,startDate:date,endDate:date = date(2999,12,31),maintenance:bool=False,revenue:float=0.0):
@@ -81,6 +83,6 @@ class Facility(ABC):
         return (f"Facility located at {self.location}, Rental Period: {self.startDate} to {self.endDate}, "
                 f"Maintenance: {'Yes' if self.maintenance else 'No'}, Revenue: ${self.revenue:.2f}")
     
-
+# This is the Facility class. It should not be instantiated directly.
 if __name__ == "__main__":
    print("This is the Facility class, which serves as a base class for Room and Leisure classes. It should not be instantiated directly.")

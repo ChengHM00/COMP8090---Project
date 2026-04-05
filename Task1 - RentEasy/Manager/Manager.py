@@ -1,3 +1,6 @@
+
+# Asset and Rental Management Module for RentEasy application, providing functionality to manage room and leisure assets, handle rentals, and calculate revenue and statistics.
+
 from datetime import date
 from dataclasses import dataclass
 from typing import List
@@ -6,6 +9,7 @@ from Object.Room import Room
 from Object.Leisure import Leisure
 from RentalRecord import RentalRecord   
 
+ # Add, update, and delete room and leisure assets, with validation for input data and error handling
 class AssetManager:
     def __init__(self):
         self.rooms_assets: List[Room] = []
@@ -66,7 +70,7 @@ class AssetManager:
         self.rooms_assets = []
         self.leisures_assets = []
 
-
+# Add, update, and delete room and leisure rentals, with validation for rental periods, asset availability and revenure calculation
 class RentalManager:
     def __init__(self, asset_manager: AssetManager):
         self.asset_manager = asset_manager
@@ -112,6 +116,7 @@ class RentalManager:
         self.next_rental_id += 1
         return record
 
+    # Add a leisure rental linked to a room rental, with check for rental periods, asset availability, and leisure capacity
     def add_leisure_rental(self, asset_index: int, start_date: date, end_date: date, rate: float, rental_hours: int, room_rental_index: int) -> RentalRecord:
         if start_date > end_date:
             raise ValueError("End date must be on or after start date.")
@@ -167,6 +172,7 @@ class RentalManager:
         self.next_rental_id += 1
         return record
 
+    # Check for rental periods and asset availability
     def has_overlap(self, asset_type: str, asset_index: int, start_date: date, end_date: date) -> bool:
         for rental in self.rentals:
             if rental.asset_type != asset_type or rental.asset_index != asset_index:
