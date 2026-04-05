@@ -23,6 +23,7 @@ This system aim at provide solution on managing multiple resisdent renting and c
 
 ## Project Structure
 
+```
 .
 │   
 ├── Assets/
@@ -30,6 +31,7 @@ This system aim at provide solution on managing multiple resisdent renting and c
 ├── Room.py
 ├── Leisure.py
 └── RentEasy.py
+```
 
 - Facility.py - Define Facility Class for all object
 - Room.py - Define Room Class under Facility class for room asset
