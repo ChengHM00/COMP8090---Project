@@ -18,13 +18,23 @@ Cheng Hoi Man (11666130)
 ----------------------------------
 ## Introduction
 
-This system aim at.........
+This system aim at provide solution on managing multiple resisdent renting and coresponding assets renting with simple and easy web application interface for users. The program have impliment OOP concept to improve the structure.
 
+
+## Project Structure
+
+ src/
+│   
+├── Assets/
+├── Facility.py
+├── Room.py
+├── Leisure.py
+└── RentEasy.py
 
 
 ## Updates
 - 24 Feb 2026 - Draft of this document
-
+- 05 Apr 2026 - Main fuction ver1.0 updated
 
 
 ## Installation
