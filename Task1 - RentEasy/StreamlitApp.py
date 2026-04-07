@@ -318,9 +318,6 @@ class StreamlitApp:
                 else:
                     st.warning("No rental data to export.")
 
-            st.divider()
-            if st.button("Export All Data (ZIP)", use_container_width=True):
-                st.info("ZIP export feature coming soon! Please export each data type separately for now.")
         
         # Import page and add the data to the lsit, then show the data in the page. 
         # When importing, it will replace existing data, so show a warning message before importing.
@@ -364,7 +361,7 @@ class StreamlitApp:
             st.divider()
             st.subheader("Quick Actions")
             col1, col2 = st.columns(2)
-            
+
             # Clear all data action, which will clear all room, leisure, and rental data. Show a confirmation message before clearing.
             with col1:
                 if st.button("Clear All Data", use_container_width=True, type="secondary"):
