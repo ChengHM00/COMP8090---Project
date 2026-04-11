@@ -69,7 +69,11 @@ cd COMP8090---Project
 pip install streamlit
 streamlit run RentEasy.py
 ```
-
+- For non-Git Environment:
+- - Download the whole program
+- - Open terminal in the program folder
+- - install stramlit package
+- - type " streamlit run RentEasy.py"
 ## Program Introduction Video
 
 https://youtu.be/LdM0f9YxK_Q
