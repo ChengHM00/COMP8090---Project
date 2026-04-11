@@ -52,7 +52,7 @@ class StreamlitApp:
 
 #This is the Manage Assets page, which allows users to add, edit, and delete room and leisure assets.
     def show_manage_assets():
-        asset_manager = CSVManager.get_manager()
+        asset_manager = GetManager.get_manager()
         st.header("Manage Assets")
         tab1, tab2 = st.tabs(["Rooms", "Leisure Facilities"])
 
@@ -139,8 +139,8 @@ class StreamlitApp:
 
 #This is the Manage Rentals page, which allows users to add, edit, and delete room and leisure rentals.
     def show_manage_rentals():
-        asset_manager = CSVManager.get_manager()
-        rental_manager = CSVManager.get_rental_manager(asset_manager)
+        asset_manager = GetManager.get_manager()
+        rental_manager = GetManager.get_rental_manager(asset_manager)
         st.header("Manage Rentals")
         tab1, tab2 = st.tabs(["Room Rentals", "Leisure Rentals"])
 
@@ -245,8 +245,8 @@ class StreamlitApp:
 
     # This is the Revenue page, which allows users view the total revenue from all rentals.
     def show_revenue():
-        asset_manager = CSVManager.get_manager()
-        rental_manager = CSVManager.get_rental_manager(asset_manager)
+        asset_manager = GetManager.get_manager()
+        rental_manager = GetManager.get_rental_manager(asset_manager)
         st.header("Revenue Overview")
         stats = rental_manager.get_statistics()
         col1, col2, col3 = st.columns(3)
@@ -266,8 +266,8 @@ class StreamlitApp:
 
     #This is data management page, which allows users to IO csv Room/Leisure/Rental data seperately.
     def show_data_management():
-        asset_manager = CSVManager.get_manager()
-        rental_manager = CSVManager.get_rental_manager(asset_manager)
+        asset_manager = GetManager.get_manager()
+        rental_manager = GetManager.get_rental_manager(asset_manager)
         csv_manager = st.session_state.csv_manager
         st.header("Data Management")
         st.write("Export your data to CSV files or import data from CSV files.")
