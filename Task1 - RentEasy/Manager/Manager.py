@@ -2,7 +2,6 @@
 # Asset and Rental Management Module for RentEasy application, providing functionality to manage room and leisure assets, handle rentals, and calculate revenue and statistics.
 
 from datetime import date
-from dataclasses import dataclass
 from typing import List
 
 from Object.Room import Room

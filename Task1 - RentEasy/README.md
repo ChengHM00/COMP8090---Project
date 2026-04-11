@@ -34,8 +34,10 @@ This system aim at provide solution on managing multiple resisdent renting and c
 ├── Manager/
 │   ├── CSVManager.py
 │   ├── Manager.py
+│   ├── ReadRecord.py
 ├── RentalRecord.py
 ├── StreamlitApp.py
+├── GetManager.py
 └── RentEasy.py
 ```
 
@@ -43,11 +45,13 @@ This system aim at provide solution on managing multiple resisdent renting and c
 - Room.py - Define Room Class under Facility class for room asset
 - Leisure.py - Define Leisure Class under Facility class for Leisure Facility asset
 
-- CSVManager.py - Reocrd CSV I/O function 
+- CSVManager.py - Reocrd CSV I/O function
+- ReadRecord.py - Read data dict to object
 - Manager.py - Maintain Assets and Renatl Funtion
 
 - RentalRecord.py - dataclass for represent both room and leisure rentals
 - StreamlitApp.py - Streamlit Web App function 
+- GetManager.py - Get Manager Function
 - RentEasy.py - Main application
 
 

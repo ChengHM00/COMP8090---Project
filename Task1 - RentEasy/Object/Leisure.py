@@ -1,4 +1,4 @@
-from Facility import Facility
+from Object.Facility import Facility
 from datetime import date
 
 class Leisure(Facility):

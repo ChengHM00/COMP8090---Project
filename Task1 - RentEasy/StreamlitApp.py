@@ -3,11 +3,11 @@
 
 import streamlit as st
 from datetime import date
-from dataclasses import dataclass
 from pathlib import Path
 
 
 from Manager.CSVManager import CSVManager
+from GetManager import GetManager
 
 class StreamlitApp:
 
@@ -16,8 +16,8 @@ class StreamlitApp:
         st.title("RentEasy - Homestay Management System")
         
         # Initialize managers
-        self.asset_manager = CSVManager.get_manager()
-        self.rental_manager = CSVManager.get_rental_manager(self.asset_manager)
+        self.asset_manager = GetManager.get_manager()
+        self.rental_manager = GetManager.get_rental_manager(self.asset_manager)
         if 'csv_manager' not in st.session_state:
             st.session_state.csv_manager = CSVManager(self.asset_manager, self.rental_manager)
         
@@ -42,8 +42,8 @@ class StreamlitApp:
             st.image(logo_path.read_bytes(), caption="RentEasy Logo")
         else:
             st.warning(f"Logo asset missing: {logo_path}")
-        asset_manager = CSVManager.get_manager()
-        rental_manager = CSVManager.get_rental_manager(asset_manager)
+        asset_manager = GetManager.get_manager()
+        rental_manager = GetManager.get_rental_manager(asset_manager)
         stats = rental_manager.get_statistics()
         col1, col2, col3 = st.columns(3)
         col1.metric("Rooms", len(asset_manager.rooms_assets))

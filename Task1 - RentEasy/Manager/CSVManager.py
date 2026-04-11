@@ -5,7 +5,7 @@ import streamlit as st
 from datetime import date
 import pandas as pd
 import io
-
+from Manager.ReadRecord import ReadRecord
 
 class CSVManager:
     def __init__(self, asset_manager, rental_manager):
@@ -76,7 +76,7 @@ class CSVManager:
             df = pd.read_csv(io.StringIO(csv_data.decode('utf-8')))
             rooms = []
             for _, row in df.iterrows():
-                rooms.append(self._room_from_dict({
+                rooms.append(ReadRecord._room_from_dict({
                     'name': row['name'],
                     'location': row['location'],
                     'capacity': int(row['capacity']),
@@ -94,7 +94,7 @@ class CSVManager:
             df = pd.read_csv(io.StringIO(csv_data.decode('utf-8')))
             leisures = []
             for _, row in df.iterrows():
-                leisures.append(self._leisure_from_dict({
+                leisures.append(ReadRecord._leisure_from_dict({
                     'name': row['name'],
                     'location': row['location'],
                     'availability': int(row['availability']),
@@ -144,7 +144,7 @@ class CSVManager:
                     'rental_time': rental_time,
                     'room_rental_index': room_rental_index,
                 }
-                rentals.append(self._rental_record_from_dict(converted, index + 1))
+                rentals.append(ReadRecord._rental_record_from_dict(converted, index + 1))
 
             # Validate imported rental references against loaded assets and rental links
             for rental in rentals:

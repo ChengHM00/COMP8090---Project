@@ -1,4 +1,4 @@
-from Facility import Facility   
+from Object.Facility import Facility   
 from datetime import date
 
 # Room class to represent a rental room that inherits from the Facility class, with additional attributes for room type and capacity.
