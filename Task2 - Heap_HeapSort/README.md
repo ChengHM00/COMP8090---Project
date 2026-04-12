@@ -1,7 +1,4 @@
-# RentEasy - Hotel and Homestay Management System
-<p align="center">
-    <img src="Assets/building_hotel.png" width="400">
-</p>
+# Heap and Heap Sort (Job prioritizing)
 
 
 <center> Hong Kong Metropolitan University
