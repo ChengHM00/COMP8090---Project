@@ -1,13 +1,18 @@
+# Construct max heap for heap sort
 class MaxHeap:
+
     def __init__(self):
+    #Initial empty heap
         self.data = []
 
     def insert(self, value):
+    #insert new value to the heap
         """Insert a value into the max-heap."""
         self.data.append(value)
         self._bubble_up(len(self.data) - 1)
 
     def extract_max(self):
+    # remove and return the maximum element from the heap
         """Remove and return the maximum element."""
         if not self.data:
             return None
@@ -20,11 +25,13 @@ class MaxHeap:
         return max_value
 
     def peek(self):
+    # getMax(), Return the maximum element without removing 
         """Return max element without removing."""
         return self.data[0] if self.data else None
 
-    # ---------- helpers ----------
+    
     def _bubble_up(self, index):
+    # Restore the heap property after insertion.
         parent = (index - 1) // 2
         while index > 0 and self.data[index] > self.data[parent]:
             self.data[index], self.data[parent] = self.data[parent], self.data[index]
@@ -32,6 +39,7 @@ class MaxHeap:
             parent = (index - 1) // 2
 
     def _bubble_down(self, index):
+    # Restore the heap property after removal of the root.
         size = len(self.data)
         while True:
             left = 2 * index + 1
@@ -49,8 +57,22 @@ class MaxHeap:
             self.data[index], self.data[largest] = self.data[largest], self.data[index]
             index = largest
 
+#heap sort using the MaxHeap
+def heap_sort(items):
+    heap = MaxHeap()
+    
+    # Build heap
+    for item in items:
+        heap.insert(item)
 
-            # (priority, job_name)
+    # Extract in sorted order
+    sorted_items = []
+    while heap.peek() is not None:
+        sorted_items.append(heap.extract_max())
+
+    return sorted_items
+
+ # Example data: (priority, job_name)           
 jobs = [
     (2, "Job A"),
     (5, "Job B"),
@@ -58,14 +80,10 @@ jobs = [
     (1, "Job D")
 ]
 
-heap = MaxHeap()
+# Perform heap sort on the job list
+sorted_jobs = heap_sort(jobs)
 
-# Insert all jobs
-for prio, name in jobs:
-    heap.insert((prio, name))
-
-# Extract in priority order
-print("Execution order:")
-while heap.peek() is not None:
-    prio, name = heap.extract_max()
+print("Sorted order:")
+for prio, name in sorted_jobs:
     print(f"{name} (priority {prio})")
+

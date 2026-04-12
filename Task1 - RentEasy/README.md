@@ -67,6 +67,7 @@ This system aim at provide solution on managing multiple resisdent renting and c
 git clone https://github.com/ChengHM00/COMP8090---Project.git
 cd COMP8090---Project
 pip install streamlit
+cd "Task1 - RentEasy"
 streamlit run RentEasy.py
 ```
 - For non-Git Environment:
